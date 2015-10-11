@@ -1,0 +1,61 @@
+{% extends "basic.html" %}
+{% block content %}
+
+<div class="navibar">
+	<div class="left">
+		<a href="/">Home</a>
+	</div>
+	<div class="right">
+	<a href="/files/">My files</a> | 
+	<a href="/logout">{{user.username}}(Log out)</a>
+	</div>
+</div>
+
+<table class="files-table">
+	<tr>
+		<th class="filename">File Name</th>
+		<th class="size">Size</th>
+		<th class="created">Created Time</th>
+		<th class="options">Options</th>
+	</tr>
+	{% for file in files %}
+	{% if loop.index%2 == 0 %}
+	<tr class="odd">
+	{% else %}
+	<tr class="even">
+	{% endif %}
+		<td class="filename">
+			{% if file.uuid == rename %}
+				<form id="newname" method="post">
+					<input type="hidden" name="action" value="rename" />
+					<input type="hidden" name="uuid" value="{{file.uuid}}" />
+					<input name="newname" value="{{file.name}}" />
+				</form>
+			{% else %}
+				<a href="/files/{{file.uuid}}">
+					{{file.name}}
+				</a>
+			{% endif %}
+		</td>
+		<td class="size">{{file.size}}</td>
+		<td class="created">{{file.created}}</td>
+		<td class="options">
+			{% if file.uuid == rename %}
+				<button form="newname">submit</button>
+			{% else %}
+				<form method="post" action="/files/{{file.uuid}}">
+					<input type="hidden" name="action" value="delete" />
+					<input type="submit" value="delete" />
+				</form>
+
+				<form method="get">
+					<input type="hidden" name="rename" value="{{file.uuid}}"/>
+					<input type="submit" value="rename" />
+				</form>
+			{% endif %}
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+<div class="left">Total: {{total_size}}</div>
+{% endblock %}

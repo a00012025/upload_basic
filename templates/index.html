@@ -1,0 +1,29 @@
+{% extends "basic.html" %}
+{% block content %}
+
+<div class="navibar">
+	<div class="left">
+		<a href="/">Home</a>
+	</div>
+	<div class="right">
+	{% if user %}
+	<a href="/files/">My files</a> | 
+	<a href="/logout">{{user.username}}(Log out)</a>
+	{% else %}
+	<a href="/signup">Sign up</a> | 
+	<a href="/login">Log in</a>
+	{% endif %}
+	</div>
+</div>
+
+<p><h1>Select and Upload</h1></p>
+
+<form enctype="multipart/form-data" method="post" action="/fileupload">
+	File: <input type="file" name="filearg" />
+	<br />
+	<br />
+	<input type="submit" value="upload" />
+</form>
+{{upload_message}}
+
+{% endblock %}

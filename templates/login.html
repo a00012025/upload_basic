@@ -1,0 +1,30 @@
+{% extends "basic.html" %}
+{% block content %}
+
+<div class="navibar">
+	<div class="left">
+		<a href="/">Home</a>
+	</div>
+	<div class="right">
+		<a href="/signup">Sign up</a> | 
+		<a href="/login">Log in</a>
+	</div>
+</div>
+
+<form method="post">
+	<table>
+		<tr>
+			<td>Username: </td>
+			<td><input name="username"></td>
+		</tr>
+		<tr>
+			<td>Password: </td>
+			<td><input name="password" type="password"></td>
+		</tr>
+	</table>
+	{{login_error}}
+	<br>
+	<input type="submit">
+</form>
+
+{% endblock %}
